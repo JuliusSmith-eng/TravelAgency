@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soltrail — Hand-picked tours &amp; excursions</title>
+  <meta name="description" content="Soltrail plans small-group tours and day excursions with local guides. Pick a trip, send a request and we reply within one hour.">
+  <meta name="theme-color" content="#E2E2E0">
+
+  <!-- Open Graph (texts are updated by js/i18n.js; og:image needs a PNG/JPG 1200x630 on production, see README) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Soltrail">
+  <meta property="og:title" content="Soltrail — Hand-picked tours &amp; excursions">
+  <meta property="og:description" content="Small-group tours and day excursions with local guides.">
+  <meta property="og:image" content="assets/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Apply the saved / system theme BEFORE first paint to avoid a flash -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+
+  <link rel="preload" as="image" type="image/avif" href="assets/hero/m-001.avif" media="(max-width: 700px)" fetchpriority="high">
+  <link rel="preload" as="image" type="image/avif" href="assets/hero/d-001.avif" media="(min-width: 701px)" fetchpriority="high">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/calistoga-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css?v=1">
+</head>
+<body>
+  <div class="glass-bg" id="glass-bg" aria-hidden="true">
+    <!-- Living colour under the glass: soft light blobs, topographic lines, glass orbs, a drifting canoe -->
+    <div class="gb gb--1"><i></i></div>
+    <div class="gb gb--2"><i></i></div>
+    <div class="gb gb--3"><i></i></div>
+    <div class="gb gb--4"><i></i></div>
+    <svg class="gb-lines" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <g>
+        <path style="--i:0" d="M-40 102.5 L-10 129.3 L20 160.8 L50 183.3 L80 188.4 L110 178.0 L140 162.1 L170 151.7 L200 151.7 L230 157.4 L260 158.8 L290 147.6 L320 124.0 L350 97.6 L380 81.4 L410 84.1 L440 104.3 L470 131.6 L500 152.8 L530 160.6 L560 157.0 L590 151.6 L620 153.8 L650 165.9 L680 181.2 L710 188.1 L740 178.1 L770 152.2 L800 120.6 L830 97.0 L860 90.6 L890 100.4 L920 116.8 L950 128.4 L980 129.6 L1010 124.2 L1040 122.1 L1070 132.0 L1100 154.5 L1130 180.9 L1160 198.1 L1190 196.7 L1220 177.3 L1250 149.8 L1280 127.4 L1310 118.4 L1340 121.4 L1370 127.3 L1400 126.4 L1430 115.4 L1460 100.4 L1490 92.7"/>
+        <path style="--i:1" d="M-40 231.7 L-10 257.7 L20 269.7 L50 266.2 L80 252.4 L110 237.0 L140 227.4 L170 225.6 L200 227.5 L230 225.7 L260 214.3 L290 192.8 L320 167.3 L350 147.5 L380 142.0 L410 153.6 L440 178.1 L470 205.9 L500 227.4 L530 237.3 L560 237.1 L590 233.4 L620 233.5 L650 241.0 L680 253.2 L710 262.6 L740 261.0 L770 244.5 L800 216.0 L830 184.4 L860 160.5 L890 151.3 L920 157.3 L950 172.4 L980 187.8 L1010 196.5 L1040 197.7 L1070 196.0 L1100 199.0 L1130 212.0 L1160 234.3 L1190 259.2 L1220 276.8 L1250 279.2 L1280 264.7 L1310 238.6 L1340 211.0 L1370 191.0 L1400 182.9 L1430 184.4 L1460 188.3 L1490 187.6"/>
+        <path style="--i:2" d="M-40 339.6 L-10 335.7 L20 322.7 L50 307.0 L80 295.2 L110 290.5 L140 291.7 L170 294.0 L200 291.5 L230 280.7 L260 262.1 L290 240.6 L320 223.6 L350 217.8 L380 226.0 L410 245.9 L440 271.1 L470 293.8 L500 307.9 L530 311.8 L560 308.3 L590 303.1 L620 301.9 L650 307.2 L680 317.0 L710 326.1 L740 327.9 L770 318.2 L800 297.3 L830 270.1 L860 244.5 L890 227.9 L920 224.4 L950 232.9 L980 248.3 L1010 263.4 L1040 272.9 L1070 275.2 L1100 273.0 L1130 271.9 L1160 277.4 L1190 291.4 L1220 311.6 L1250 331.9 L1280 344.7 L1310 344.7 L1340 331.0 L1370 307.8 L1400 282.4 L1430 262.5 L1460 252.5 L1490 252.2"/>
+        <path style="--i:3" d="M-40 379.6 L-10 365.1 L20 355.0 L50 351.8 L80 354.7 L110 360.1 L140 363.1 L170 359.9 L200 349.2 L230 333.0 L260 316.1 L290 304.2 L320 301.8 L350 310.4 L380 327.7 L410 348.7 L440 367.5 L470 379.2 L500 382.0 L530 377.3 L560 369.4 L590 363.3 L620 362.6 L650 368.2 L680 377.7 L710 386.4 L740 389.2 L770 382.9 L800 367.5 L830 346.4 L860 325.1 L890 309.7 L920 304.2 L950 309.1 L980 321.7 L1010 336.9 L1040 349.3 L1070 355.3 L1100 354.5 L1130 349.5 L1160 345.0 L1190 345.6 L1220 353.5 L1250 368.0 L1280 385.0 L1310 399.1 L1340 405.0 L1370 400.1 L1400 385.3 L1430 364.8 L1460 344.4 L1490 329.7"/>
+        <path style="--i:4" d="M-40 420.9 L-10 419.5 L20 423.2 L50 428.6 L80 432.0 L110 430.1 L140 421.8 L170 408.4 L200 393.2 L230 380.8 L260 375.3 L290 378.8 L320 390.9 L350 409.0 L380 428.3 L410 444.3 L440 453.5 L470 454.8 L500 449.7 L530 441.6 L560 434.4 L590 431.6 L620 434.4 L650 441.6 L680 450.3 L710 456.1 L740 455.7 L770 447.4 L800 431.9 L830 412.5 L860 393.9 L890 380.7 L920 375.9 L950 380.1 L980 391.5 L1010 406.1 L1040 419.5 L1070 428.1 L1100 430.3 L1130 427.2 L1160 421.8 L1190 418.0 L1220 419.0 L1250 426.4 L1280 439.1 L1310 454.1 L1340 466.8 L1370 473.1 L1400 470.6 L1430 459.2 L1460 441.5 L1490 422.0"/>
+        <path style="--i:5" d="M-40 493.5 L-10 495.7 L20 495.2 L50 490.0 L80 479.9 L110 466.4 L140 452.4 L170 441.6 L200 437.2 L230 441.1 L260 453.2 L290 471.5 L320 492.3 L350 511.6 L380 526.1 L410 533.6 L440 534.0 L470 529.3 L500 522.3 L530 516.3 L560 513.6 L590 515.2 L620 520.2 L650 526.1 L680 529.9 L710 528.4 L740 520.3 L770 505.5 L800 486.2 L830 466.0 L860 448.8 L890 438.1 L920 435.7 L950 441.7 L980 454.0 L1010 469.3 L1040 483.8 L1070 494.5 L1100 500.1 L1130 500.8 L1160 498.6 L1190 496.5 L1220 497.3 L1250 502.9 L1280 513.3 L1310 526.8 L1340 540.3 L1370 550.2 L1400 553.4 L1430 548.2 L1460 535.0 L1490 516.1"/>
+        <path style="--i:6" d="M-40 555.3 L-10 547.2 L20 535.7 L50 522.8 L80 511.3 L110 504.1 L140 503.5 L170 510.5 L200 524.7 L230 544.1 L260 565.5 L290 585.6 L320 601.4 L350 611.0 L380 613.9 L410 611.3 L440 605.3 L470 598.5 L500 593.5 L530 591.6 L560 593.0 L590 596.5 L620 599.9 L650 600.8 L680 596.9 L710 587.2 L740 571.8 L770 552.7 L800 532.6 L830 515.0 L860 502.8 L890 498.0 L920 501.2 L950 511.3 L980 525.9 L1010 542.0 L1040 556.6 L1070 567.4 L1100 573.6 L1130 575.6 L1160 575.1 L1190 574.6 L1220 576.2 L1250 581.5 L1280 590.7 L1310 602.6 L1340 615.1 L1370 625.0 L1400 629.7 L1430 627.3 L1460 617.3 L1490 600.8"/>
+        <path style="--i:7" d="M-40 602.6 L-10 592.2 L20 584.6 L50 582.0 L80 585.5 L110 595.5 L140 610.7 L170 629.0 L200 647.8 L230 664.4 L260 676.4 L290 682.8 L320 683.3 L350 679.0 L380 672.0 L410 664.4 L440 658.3 L470 655.1 L500 655.3 L530 658.2 L560 662.1 L590 665.0 L620 664.8 L650 660.1 L680 650.3 L710 636.2 L740 619.4 L770 602.4 L800 587.9 L830 578.3 L860 575.1 L890 578.7 L920 588.2 L950 601.8 L980 616.9 L1010 630.9 L1040 641.9 L1070 648.6 L1100 651.0 L1130 650.1 L1160 647.8 L1190 646.1 L1220 646.7 L1250 650.9 L1280 658.6 L1310 668.7 L1340 679.3 L1370 688.1 L1400 692.6 L1430 691.4 L1460 683.8 L1490 670.4"/>
+        <path style="--i:8" d="M-40 664.6 L-10 666.7 L20 674.1 L50 686.0 L80 700.9 L110 716.6 L140 731.0 L170 741.9 L200 748.2 L230 749.3 L260 745.7 L290 738.8 L320 730.4 L350 722.5 L380 716.8 L410 714.2 L440 715.1 L470 718.7 L500 723.6 L530 728.2 L560 730.5 L590 729.2 L620 723.5 L650 713.7 L680 700.9 L710 686.8 L740 673.6 L770 663.4 L800 657.9 L830 658.0 L860 663.5 L890 673.6 L920 686.3 L950 699.7 L980 711.6 L1010 720.3 L1040 725.0 L1070 725.6 L1100 722.9 L1130 718.5 L1160 714.2 L1190 711.7 L1220 712.3 L1250 716.3 L1280 723.5 L1310 732.6 L1340 741.7 L1370 749.0 L1400 752.5 L1430 751.1 L1460 744.4 L1490 733.1"/>
+      </g>
+    </svg>
+    <div class="orb orb--1"><i></i></div>
+    <div class="orb orb--2"><i></i></div>
+    <div class="orb orb--3"><i></i></div>
+    <div class="canoe"><svg viewBox="0 0 40 120"><path class="canoe__hull" d="M20 2c7 18 10 44 8 70-1 18-4 34-8 46-4-12-7-28-8-46C10 46 13 20 20 2z"/><g class="canoe__seats"><rect x="14" y="44" width="12" height="4" rx="1"/><rect x="14" y="54" width="12" height="4" rx="1"/><rect x="14" y="64" width="12" height="4" rx="1"/><rect x="14" y="74" width="12" height="4" rx="1"/></g><path class="canoe__oar" d="M3 50 37 36"/></svg></div>
+  </div>
+
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <!-- ============ 1. HEADER ============ -->
+  <header class="header" id="top">
+    <div class="header__bar">
+      <div class="header__inner">
+        <a class="logo" href="#top" aria-label="Soltrail">
+          <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+            <rect width="48" height="48" rx="14" fill="var(--logo-bg)"/>
+            <circle cx="29" cy="18" r="8" fill="var(--logo-sun)"/>
+            <path d="M7 38c9-12 15-3 22-9" fill="none" stroke="var(--logo-trail)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M33 26c3-1 5-2 8-2" fill="none" stroke="var(--logo-trail)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 7"/>
+          </svg>
+          <span class="logo-text" data-site="name">Soltrail</span>
+        </a>
+
+        <nav class="nav" id="main-nav" aria-label="Main navigation" data-i18n-aria="nav.main">
+          <a href="#tours" data-i18n="nav.tours">Tours</a>
+          <a href="#why" data-i18n="nav.why">Why us</a>
+          <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+          <a class="btn btn-cta nav-cta-mobile" href="#contact" data-i18n="nav.cta">Leave a request</a>
+          <span class="nav__ind" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header__actions">
+          <div class="lang" id="lang">
+            <button class="lang__btn" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu" aria-label="Language" data-i18n-aria="lang.label">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.600-2.600-3.900-5.600-3.900-9S9.400 5.600 12 3z"/></svg>
+              <span id="langCur">EN</span>
+            </button>
+            <ul class="lang__menu" id="langMenu" role="listbox" aria-label="Language" data-i18n-aria="lang.label">
+              <li role="presentation"><button type="button" role="option" data-lang="en" lang="en" aria-selected="true"><b>EN</b><span>English</span></button></li>
+              <li role="presentation"><button type="button" role="option" data-lang="uk" lang="uk" aria-selected="false"><b>UA</b><span>Українська</span></button></li>
+              <li role="presentation"><button type="button" role="option" data-lang="de" lang="de" aria-selected="false"><b>DE</b><span>Deutsch</span></button></li>
+            </ul>
+          </div>
+
+          <button type="button" class="tt" id="theme-toggle" aria-label="Switch light / dark theme" data-i18n-aria="theme.toggle">
+            <span class="tt__track" aria-hidden="true"><span class="tt__stars"></span><span class="tt__clouds"></span></span>
+            <span class="tt__knob" aria-hidden="true">
+              <svg class="tt__sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400"/></svg>
+              <svg class="tt__moon" viewBox="0 0 24 24"><path d="M21 12.800A9 9 0 1 1 11.200 3a7 7 0 0 0 9.800 9.800z"/></svg>
+            </span>
+          </button>
+
+          <a class="header__cta" href="#contact" data-i18n="nav.cta">Leave a request</a>
+          <button type="button" class="icon-btn burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu" data-i18n-aria="nav.openMenu">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ 2. HERO: scroll-driven "fly to the waterfall" ============
+         .hero is a tall track; .hero__pin stays on screen while you scroll through it.
+         js/hero.js draws the pre-rendered frames (assets/hero) on the canvas and reveals the text. -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__pin">
+        <picture>
+          <source media="(max-width: 700px)" type="image/avif" srcset="assets/hero/m-001.avif">
+          <source media="(max-width: 700px)" srcset="assets/hero/m-001.webp">
+          <source type="image/avif" srcset="assets/hero/d-001.avif">
+          <img class="hero__poster" src="assets/hero/d-001.webp" width="1600" height="900" alt="" fetchpriority="high" decoding="async">
+        </picture>
+        <canvas class="hero__canvas" aria-hidden="true"></canvas>
+        <div class="hero__vignette" aria-hidden="true"></div>
+
+        <div class="container hero__content">
+          <p class="eyebrow hero__reveal" style="--a:.08;--w:.18" data-i18n="hero.eyebrow">Tours &amp; excursions</p>
+          <h1 id="hero-title" class="hero__reveal" style="--a:.14;--w:.26" data-i18n-rich="hero.title">Travel <em>slower.</em><br>Remember <mark>longer.</mark></h1>
+          <p class="lead hero__reveal" style="--a:.34;--w:.24" data-i18n-rich="hero.sub">Small-group tours and day excursions led by local guides — planned end to end, so all you pack is curiosity.</p>
+          <div class="hero-actions hero__reveal hero__reveal--act" style="--a:.5;--w:.2">
+            <a class="btn btn-cta btn-lg" href="#tours" data-i18n="hero.cta">Browse tours</a>
+            <a class="btn btn-glass btn-lg" href="#contact" data-i18n="hero.cta2">Get a free quote</a>
+          </div>
+          <ul class="hero-badges hero__reveal" style="--a:.64;--w:.2">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.b1">Free changes up to 14 days</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.b2">Local expert guides</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.b3">Reply within 1 hour</span></li>
+          </ul>
+        </div>
+
+        <a class="hero__scroll" href="#tours"><span data-i18n="hero.scroll">Scroll to explore</span><i aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <!-- ============ 3. TOURS ============ -->
+    <div class="anchor" id="tours"></div>
+    <section class="section" aria-labelledby="tours-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="tours.eyebrow">Our trips</p>
+          <h2 id="tours-title" data-i18n="tours.title">Pick your next adventure</h2>
+          <p class="lead" data-i18n="tours.sub">Six hand-picked journeys. Prices are per person.</p>
+        </header>
+        <!-- Cards are rendered by js/tours.js from data/tours.js -->
+        <ul class="tour-grid" id="tour-grid"></ul>
+      </div>
+    </section>
+
+    <!-- ============ 4. WHY US ============ -->
+    <div class="anchor" id="why"></div>
+    <section class="section section-alt" aria-labelledby="why-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="why.eyebrow">Why {brand}</p>
+          <h2 id="why-title" data-i18n="why.title">Trips planned the way you’d plan them yourself</h2>
+          <p class="lead" data-i18n="why.sub">No call-centre scripts.</p>
+        </header>
+        <ul class="why-grid">
+          <li class="why-card reveal">
+            <span class="why-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></span>
+            <h3 data-i18n="why1.t">Local expert guides</h3>
+            <p data-i18n="why1.d">Born-and-raised guides who know the quiet corners.</p>
+          </li>
+          <li class="why-card reveal">
+            <span class="why-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/></svg></span>
+            <h3 data-i18n="why2.t">Honest, all-in prices</h3>
+            <p data-i18n="why2.d">No hidden fees.</p>
+          </li>
+          <li class="why-card reveal">
+            <span class="why-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="2"/><rect x="17" y="14" width="4" height="6" rx="2"/><path d="M19 20c0 1.5-2 2-5 2"/></svg></span>
+            <h3 data-i18n="why3.t">Support around the clock</h3>
+            <p data-i18n="why3.d">A real person answers.</p>
+          </li>
+          <li class="why-card reveal">
+            <span class="why-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 14.2c3 0 5.5 2 5.5 5.3"/></svg></span>
+            <h3 data-i18n="why4.t">Small groups, flexible plans</h3>
+            <p data-i18n="why4.d">Maximum 12 travellers.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 5. REVIEWS ============ -->
+    <div class="anchor" id="reviews"></div>
+    <section class="section" aria-labelledby="rev-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="rev.eyebrow">Reviews</p>
+          <h2 id="rev-title" data-i18n="rev.title">Travellers say it best</h2>
+        </header>
+        <ul class="review-grid">
+          <li class="review-card reveal">
+            <svg class="stars-row" viewBox="0 0 120 22" role="img" aria-label="Rated 5 out of 5" data-i18n-aria="rev.stars"><use href="#stars"/></svg>
+            <blockquote data-i18n="rev1.q">Everything was organised down to the smallest detail.</blockquote>
+            <div class="review-author"><span class="avatar" aria-hidden="true">A</span><p><strong data-i18n="rev1.n">Anna M.</strong><span data-i18n="rev1.t">Aegean Island Escape</span></p></div>
+          </li>
+          <li class="review-card reveal">
+            <svg class="stars-row" viewBox="0 0 120 22" role="img" aria-label="Rated 5 out of 5" data-i18n-aria="rev.stars"><use href="#stars"/></svg>
+            <blockquote data-i18n="rev2.q">Fast reply, a clear price.</blockquote>
+            <div class="review-author"><span class="avatar" aria-hidden="true">O</span><p><strong data-i18n="rev2.n">Oleksandr K.</strong><span data-i18n="rev2.t">Alpine Lakes &amp; Peaks</span></p></div>
+          </li>
+          <li class="review-card reveal">
+            <svg class="stars-row" viewBox="0 0 120 22" role="img" aria-label="Rated 5 out of 5" data-i18n-aria="rev.stars"><use href="#stars"/></svg>
+            <blockquote data-i18n="rev3.q">Small group, great atmosphere, zero stress.</blockquote>
+            <div class="review-author"><span class="avatar" aria-hidden="true">L</span><p><strong data-i18n="rev3.n">Lukas S.</strong><span data-i18n="rev3.t">Desert Sunsets of Morocco</span></p></div>
+          </li>
+        </ul>
+        <p class="fine-print" data-i18n="rev.note">Sample reviews shown for demonstration.</p>
+        <!-- Reusable 5-star shape -->
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+          <defs><g id="stars" fill="var(--star)">
+            <path id="star" d="m12 2.5 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17l-5.7 3 1.2-6.4L2.8 9.2l6.4-.8z" transform="scale(.9) translate(1 0)"/>
+            <use href="#star" x="24"/><use href="#star" x="48"/><use href="#star" x="72"/><use href="#star" x="96"/>
+          </g></defs>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ============ 6. FAQ ============ -->
+    <div class="anchor" id="faq"></div>
+    <section class="section section-alt" aria-labelledby="faq-title">
+      <div class="container faq-wrap">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="faq.eyebrow">FAQ</p>
+          <h2 id="faq-title" data-i18n="faq.title">Good questions, straight answers</h2>
+        </header>
+        <div class="accordion reveal" id="accordion">
+          <div class="acc-item">
+            <h3><button type="button" class="acc-trigger" id="acc-t1" aria-expanded="false" aria-controls="acc-p1"><span data-i18n="faq1.q">How does booking work?</span><i aria-hidden="true"></i></button></h3>
+            <div class="acc-panel" id="acc-p1" role="region" aria-labelledby="acc-t1"><div><p data-i18n="faq1.a"></p></div></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" class="acc-trigger" id="acc-t2" aria-expanded="false" aria-controls="acc-p2"><span data-i18n="faq2.q">Can I cancel or change my trip?</span><i aria-hidden="true"></i></button></h3>
+            <div class="acc-panel" id="acc-p2" role="region" aria-labelledby="acc-t2"><div><p data-i18n="faq2.a"></p></div></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" class="acc-trigger" id="acc-t3" aria-expanded="false" aria-controls="acc-p3"><span data-i18n="faq3.q">What is included in the price?</span><i aria-hidden="true"></i></button></h3>
+            <div class="acc-panel" id="acc-p3" role="region" aria-labelledby="acc-t3"><div><p data-i18n="faq3.a"></p></div></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" class="acc-trigger" id="acc-t4" aria-expanded="false" aria-controls="acc-p4"><span data-i18n="faq4.q">Do you arrange trips for private groups?</span><i aria-hidden="true"></i></button></h3>
+            <div class="acc-panel" id="acc-p4" role="region" aria-labelledby="acc-t4"><div><p data-i18n="faq4.a"></p></div></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" class="acc-trigger" id="acc-t5" aria-expanded="false" aria-controls="acc-p5"><span data-i18n="faq5.q">Which languages do your guides speak?</span><i aria-hidden="true"></i></button></h3>
+            <div class="acc-panel" id="acc-p5" role="region" aria-labelledby="acc-t5"><div><p data-i18n="faq5.a"></p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. REQUEST FORM + CONTACTS ============ -->
+    <div class="anchor" id="contact"></div>
+    <section class="section" aria-labelledby="form-title">
+      <div class="container contact-grid">
+
+        <div class="form-card reveal">
+          <header class="form-head">
+            <p class="eyebrow" data-i18n="form.eyebrow">Free request</p>
+            <h2 id="form-title" data-i18n="form.title">Tell us where you want to go</h2>
+            <p class="lead" data-i18n="form.sub">Fill in the form and we will reply within one hour.</p>
+          </header>
+
+          <form id="lead-form" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="name"><span data-i18n="f.name">Full name</span> <b class="req" aria-hidden="true">*</b></label>
+                <input id="name" name="name" type="text" maxlength="60" autocapitalize="words" spellcheck="false" autocomplete="name" placeholder="Your full name" data-i18n-ph="f.name.ph" required aria-describedby="err-name">
+                <p class="field-error" id="err-name" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="phone"><span data-i18n="f.phone">Phone</span> <b class="req" aria-hidden="true">*</b></label>
+                <input id="phone" name="phone" type="tel" maxlength="24" autocomplete="tel" inputmode="tel" placeholder="+00 (000) 000-00-00" data-i18n-ph="f.phone.ph" required aria-describedby="err-phone">
+                <p class="field-error" id="err-phone" role="alert"></p>
+              </div>
+              <div class="field span-2">
+                <label for="email"><span data-i18n="f.email">Email</span> <b class="req" aria-hidden="true">*</b></label>
+                <input id="email" name="email" type="email" maxlength="254" autocapitalize="none" spellcheck="false" autocomplete="email" placeholder="you@example.com" data-i18n-ph="f.email.ph" required aria-describedby="err-email">
+                <p class="field-error" id="err-email" role="alert"></p>
+              </div>
+              <div class="field span-2">
+                <label for="tour" data-i18n="f.tour">Tour or excursion</label>
+                <select id="tour" name="tour" aria-describedby="err-tour"></select>
+                <p class="field-error" id="err-tour" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="date" data-i18n="f.date">Travel date</label>
+                <input id="date" name="date" type="date" aria-describedby="err-date">
+                <p class="field-error" id="err-date" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="guests" data-i18n="f.guests">Guests</label>
+                <input id="guests" name="guests" type="number" min="1" max="50" value="2" inputmode="numeric" aria-describedby="err-guests">
+                <p class="field-error" id="err-guests" role="alert"></p>
+              </div>
+              <div class="field span-2">
+                <label for="comment" data-i18n="f.comment">Comment (optional)</label>
+                <textarea id="comment" name="comment" rows="4" maxlength="600" aria-describedby="hint-comment err-comment" placeholder="Preferred dates, interests, special requests…" data-i18n-ph="f.comment.ph"></textarea>
+                <p class="field-hint" id="hint-comment" data-i18n="f.comment.hint">Letters, numbers and punctuation only.</p>
+                <p class="field-error" id="err-comment" role="alert"></p>
+              </div>
+
+              <!-- Honeypot: invisible for people, bots fill it in -->
+              <div class="hp" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="field span-2 consent">
+                <label class="check">
+                  <input id="consent" name="consent" type="checkbox" required aria-describedby="err-consent">
+                  <span class="box" aria-hidden="true"></span>
+                  <span data-i18n="f.consent">I agree to the processing of my personal data.</span>
+                </label>
+                <p class="field-error" id="err-consent" role="alert"></p>
+              </div>
+            </div>
+
+            <p class="form-alert" id="form-alert" role="alert" hidden></p>
+
+            <div class="form-error" id="form-error" role="alert" hidden>
+              <strong data-i18n="err.title">Something went wrong</strong>
+              <p data-i18n="err.text">We could not send your request. Please try again or message us directly:</p>
+              <div class="msg-links">
+                <a class="btn btn-wa" href="#" data-contact="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+                <a class="btn btn-tg" href="#" data-contact="telegram" target="_blank" rel="noopener">Telegram</a>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-cta btn-lg btn-block" id="submit-btn">
+              <span class="btn-label" data-i18n="f.submit">Send request</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <!-- Replaces the form after a successful submit -->
+          <div class="form-success" id="form-success" tabindex="-1" hidden>
+            <span class="success-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <h3 data-i18n="ok.title">Request sent — thank you!</h3>
+            <p data-i18n="ok.text">We will contact you within one hour.</p>
+            <p class="demo-note" id="demo-note" data-i18n="ok.demo" hidden>Demo mode: no data was sent anywhere.</p>
+            <button type="button" class="btn btn-ghost" id="again-btn" data-i18n="ok.again">Send another request</button>
+          </div>
+        </div>
+
+        <aside class="contact-card reveal" aria-labelledby="contact-title">
+          <h2 id="contact-title" data-i18n="contact.title">Prefer to chat?</h2>
+          <p class="lead" data-i18n="contact.sub">Reach us directly — we are quick to answer.</p>
+          <div class="msg-links">
+            <a class="btn btn-wa btn-lg" href="#" data-contact="whatsapp" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 8.5c0 3.5 3 6.5 6.500 6.500l1-1.500-2-1-1 .8c-1-.4-2-1.400-2.400-2.400l.8-1-1-2z"/></svg>
+              <span data-i18n="c.whatsapp">Chat on WhatsApp</span>
+            </a>
+            <a class="btn btn-tg btn-lg" href="#" data-contact="telegram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.500 3.500 2.800 10.700l5.700 2 2 6.300 3-3.700 4.700 3.500z"/><path d="m8.500 12.700 9-6.400"/></svg>
+              <span data-i18n="c.telegram">Message on Telegram</span>
+            </a>
+          </div>
+          <dl class="contact-list">
+            <div><dt data-i18n="c.phone">Phone</dt><dd><a href="#" data-contact="phone"></a></dd></div>
+            <div><dt data-i18n="c.email">Email</dt><dd><a href="#" data-contact="email"></a></dd></div>
+            <div><dt data-i18n="c.address">Office</dt><dd data-contact="address"></dd></div>
+            <div><dt data-i18n="c.hours">Opening hours</dt><dd data-i18n="c.hoursValue">Mon–Sat · 9:00–18:00</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 8. FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__crest" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <g class="cr-front"><path d="M0 50Q360 14 720 50T1440 50T2160 50T2880 50V80H0Z"/></g>
+      </svg>
+    </div>
+    <div class="footer__waves" aria-hidden="true">
+      <div class="wv wv-1"><svg viewBox="0 0 2880 400" preserveAspectRatio="none"><path d="M0 120Q360 52 720 120T1440 120T2160 120T2880 120V400H0Z"/></svg></div>
+      <div class="wv wv-2"><svg viewBox="0 0 2880 400" preserveAspectRatio="none"><path d="M0 150Q180 98 360 150T720 150T1080 150T1440 150T1800 150T2160 150T2520 150T2880 150V400H0Z"/></svg></div>
+      <div class="wv wv-3"><svg viewBox="0 0 2880 400" preserveAspectRatio="none"><path d="M0 175Q360 235 720 175T1440 175T2160 175T2880 175V400H0Z"/></svg></div>
+    </div>
+
+    <div class="container footer__content">
+      <a class="logo footer__logo" href="#top" aria-label="Soltrail">
+        <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <rect width="48" height="48" rx="14" fill="var(--c-lake)"/>
+          <circle cx="29" cy="18" r="8" fill="var(--c-abyss)"/>
+          <path d="M7 38c9-12 15-3 22-9" fill="none" stroke="var(--c-abyss)" stroke-width="4" stroke-linecap="round"/>
+          <path d="M33 26c3-1 5-2 8-2" fill="none" stroke="var(--c-abyss)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 7"/>
+        </svg>
+        <span class="logo-text" data-site="name">Soltrail</span>
+      </a>
+      <p class="footer__tag" data-i18n="footer.tag">Hand-picked tours and day excursions with local guides.</p>
+
+      <ul class="socials">
+        <li><a href="#" data-contact="instagram" data-tooltip="Instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.500" cy="6.500" r="1" fill="currentColor"/></svg></a></li>
+        <li><a href="#" data-contact="telegram" data-tooltip="Telegram" aria-label="Telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.500 3.500 2.800 10.700l5.700 2 2 6.300 3-3.700 4.700 3.500z"/><path d="m8.500 12.700 9-6.400"/></svg></a></li>
+        <li><a href="#" data-contact="whatsapp" data-tooltip="WhatsApp" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21l1.600-4.800A8.500 8.500 0 1 1 8 19.600z"/><path d="M9 8.500c0 3.500 3 6.500 6.500 6.500l1-1.500-2-1-1 .8c-1-.4-2-1.400-2.400-2.400l.8-1-1-2z"/></svg></a></li>
+        <li><a href="#" data-contact="facebook" data-tooltip="Facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a></li>
+      </ul>
+
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#tours" data-i18n="nav.tours">Tours</a>
+        <a href="#why" data-i18n="nav.why">Why us</a>
+        <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="footer__legal">
+        <p data-i18n="footer.rights">© {year} {brand}. All rights reserved.</p>
+        <p><a href="#" data-i18n="footer.privacy">Privacy policy</a> · <span data-i18n="footer.made">Website &amp; automation by</span> <a href="https://volodymyr.dev" target="_blank" rel="noopener">Volodymyr.dev</a></p>
+        <p data-i18n="footer.demo">Demo website — all names, prices and reviews are samples.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Data first, then logic. Order matters. -->
+  <script src="data/site.js?v=1" defer></script>
+  <script src="data/tours.js?v=1" defer></script>
+  <script src="data/i18n/en.js?v=1" defer></script>
+  <script src="data/i18n/uk.js?v=1" defer></script>
+  <script src="data/i18n/de.js?v=1" defer></script>
+  <script src="js/config.js?v=1" defer></script>
+  <script src="js/i18n.js?v=1" defer></script>
+  <script src="js/tours.js?v=1" defer></script>
+  <script src="js/form.js?v=1" defer></script>
+  <script src="js/hero.js?v=1" defer></script>
+  <script src="js/main.js?v=1" defer></script>
+</body>
+</html>
