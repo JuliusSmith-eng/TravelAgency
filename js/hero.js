@@ -26,7 +26,10 @@
     return;
   }
 
-  var N = 104;                                  // number of frames (must match assets/hero): 13 s at 8 fps
+  // Frame count and cache version come from the HTML (<section class="hero" data-frames data-v>), so a stale
+  // script and a new frame set can never disagree. Bump data-v in index.html whenever the frames change.
+  var N = parseInt(hero.getAttribute("data-frames"), 10) || 104;
+  var VER = hero.getAttribute("data-v") || "1";
   var mobile = window.matchMedia("(max-width: 700px)").matches;
   var PREFIX = "assets/hero/" + (mobile ? "m" : "d") + "-";
   // Frames are AVIF (sharp at a small size). Browsers without AVIF keep the WebP poster and a static hero.
@@ -174,7 +177,7 @@
         img.decoding = "async";
         active++;
         img.onload = img.onerror = function () { active--; if (img.naturalWidth) { loadedCount++; setFrame(i, img); } pump(); };
-        img.src = PREFIX + pad(i + 1) + ".avif";
+        img.src = PREFIX + pad(i + 1) + ".avif?v=" + VER;
       })(idx);
     }
   }
