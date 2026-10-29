@@ -32,11 +32,13 @@
   var VER = hero.getAttribute("data-v") || "1";
   var mobile = window.matchMedia("(max-width: 700px)").matches;
   var PREFIX = "assets/hero/" + (mobile ? "m" : "d") + "-";
+  var PREFIX_LOW = "assets/hero/" + (mobile ? "ml" : "dl") + "-";
   // Frames are AVIF (sharp at a small size). Browsers without AVIF keep the WebP poster and a static hero.
   var FOCUS = { fx: 0.5, fy: 0.5, tx: 0.5, ty: 0.5, zoom: 1 };   // frames are already composed for each screen shape
 
   var ctx = canvas.getContext("2d", { alpha: false });
-  var imgs = new Array(N);                      // downloaded frames (small, compressed); imgs[0] is the poster
+  var imgs = new Array(N);                      // downloaded sharp frames (compressed); imgs[0] is the poster
+  var lows = new Array(N);                      // tiny blurry versions of every frame: they arrive first, so there is never a gap
   var bmps = new Array(N);                      // DECODED frames only around the current position (sliding window)
   var pending = {};
   var WINDOW = 8;                               // decoded frames kept ahead/behind: bounded memory, no decode while scrolling
@@ -89,8 +91,8 @@
   /* ----- drawing ----- */
   function nearest(i) {                         // closest ready frame to index i (decoded one preferred)
     for (var d = 0; d < N; d++) {
-      var a = bmps[i - d] || imgs[i - d]; if (a) return a;
-      var b = bmps[i + d] || imgs[i + d]; if (b) return b;
+      var a = bmps[i - d] || imgs[i - d] || lows[i - d]; if (a) return a;
+      var b = bmps[i + d] || imgs[i + d] || lows[i + d]; if (b) return b;
     }
     return null;
   }
@@ -156,48 +158,58 @@
     if (Math.abs(i - p * (N - 1)) < 3) { lastKey = ""; draw(); }
   }
 
-  var requested = {}, active = 0, loadLimit = 0, MAX = 6, loadedCount = 0;
-  function pickNext() {                                        // missing frame closest to where the visitor is (ahead first)
+  var requested = {}, requestedLow = {}, active = 0, activeHi = 0, hiLimit = 0, lowOn = false, MAX = 6, loadedHi = 0;
+  function pickNext(map) {                                     // missing frame closest to where the visitor is (ahead first)
     var c = Math.round(Math.max(0, p) * (N - 1)), dir = target >= p ? 1 : -1;
     for (var k = 0; k < N; k++) {
       var a = c + k * dir, b = c - k * dir;
-      if (a >= 0 && a < N && !requested[a]) return a;
-      if (b >= 0 && b < N && !requested[b]) return b;
+      if (a >= 0 && a < N && !map[a]) return a;
+      if (b >= 0 && b < N && !map[b]) return b;
     }
     return -1;
   }
+  function load(i, isLow) {
+    var img = new Image();
+    img.decoding = "async";
+    active++; if (!isLow) activeHi++;
+    img.onload = img.onerror = function () {
+      active--; if (!isLow) activeHi--;
+      if (img.naturalWidth) {
+        if (isLow) { lows[i] = img; if (Math.abs(i - p * (N - 1)) < 3) { lastKey = ""; draw(); } }
+        else { loadedHi++; setFrame(i, img); }
+      }
+      pump();
+    };
+    img.src = (isLow ? PREFIX_LOW : PREFIX) + pad(i + 1) + ".avif?v=" + VER;
+  }
   function pump() {
-    if (!loadLimit || !/\.avif/.test(poster.currentSrc || "")) return;   // old browser without AVIF: keep the static poster
-    while (active < MAX && loadedCount + active < loadLimit) {
-      var idx = pickNext();
-      if (idx < 0) return;
-      requested[idx] = true;
-      (function (i) {
-        var img = new Image();
-        img.decoding = "async";
-        active++;
-        img.onload = img.onerror = function () { active--; if (img.naturalWidth) { loadedCount++; setFrame(i, img); } pump(); };
-        img.src = PREFIX + pad(i + 1) + ".avif?v=" + VER;
-      })(idx);
+    if (!/\.avif/.test(poster.currentSrc || "")) return;      // old browser without AVIF: keep the static poster
+    while (active < MAX) {
+      var i = lowOn ? pickNext(requestedLow) : -1;
+      if (i >= 0) { requestedLow[i] = true; load(i, true); continue; }
+      if (loadedHi + activeHi >= hiLimit) return;
+      i = pickNext(requested);
+      if (i < 0) return;
+      requested[i] = true; load(i, false);
     }
   }
-  function startLoading(limit) { loadLimit = Math.max(loadLimit, limit); pump(); }
+  function startLoading(limit) { hiLimit = Math.max(hiLimit, limit); pump(); }
 
   function begin() {
-    requested[0] = true;
+    requested[0] = true; requestedLow[0] = true;
     if (poster.complete && poster.naturalWidth) imgs[0] = poster;
     else poster.addEventListener("load", function () { imgs[0] = poster; lastKey = ""; draw(); }, { once: true });
     measure();
 
-    // Head start: a few frames right after load (small), everything else on the first sign of interaction,
-    // so the first seconds of scrolling already have neighbouring frames and the audits stay light.
-    var idle = function () { startLoading(14); };
-    setTimeout(function () { if ("requestIdleCallback" in window) requestIdleCallback(idle, { timeout: 2000 }); else idle(); }, 3500);
+    // 1) right after load: the tiny frames of the WHOLE video (~1 MB) so scrolling never meets a gap;
+    // 2) a little later: the first sharp frames; 3) on the first interaction: all sharp frames, nearest first.
+    setTimeout(function () { lowOn = true; pump(); }, 700);
+    setTimeout(function () { startLoading(14); }, 3500);
     var started = false;
     function go() {
       if (started) return;
       started = true;
-      armed = true; lastCenter = -99; warm(Math.round(Math.max(0, p) * (N - 1)));
+      lowOn = true; armed = true; lastCenter = -99; warm(Math.round(Math.max(0, p) * (N - 1)));
       ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "scroll"].forEach(function (ev) { window.removeEventListener(ev, go); });
       startLoading(N);
     }
