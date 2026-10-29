@@ -332,6 +332,7 @@ button { cursor: pointer; }
 .hero-badges svg { width: 18px; height: 18px; fill: none; stroke: var(--c-foam); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
 /* reveal: each element fades/rises while --p goes from --a to --a + --w (pure CSS, driven by scroll) */
+.hero__vignette, .hero__reveal, .hero__canvas { will-change: opacity, transform; }
 .hero__reveal { --k: clamp(0, calc((var(--p) - var(--a, 0)) / var(--w, .2)), 1); opacity: var(--k); transform: translate3d(0, calc((1 - var(--k)) * 34px), 0); }
 .hero__reveal--act { pointer-events: none; }
 .hero__pin.is-live .hero__reveal--act { pointer-events: auto; }

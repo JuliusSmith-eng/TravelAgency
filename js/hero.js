@@ -52,17 +52,20 @@
     var r = hero.getBoundingClientRect();
     top = r.top + window.scrollY;
     range = Math.max(1, hero.offsetHeight - vh);
-    // canvas = real device pixels (sharp), capped so it never costs more than the frames can give
-    var k = Math.min(window.devicePixelRatio || 1, 2);
-    var w = pin.clientWidth * k, h = pin.clientHeight * k, f = Math.min(1, 1600 / w, 1800 / h);
-    w = Math.round(w * f); h = Math.round(h * f);
+    // Canvas size = what the frames can really give, never more: drawing 1.3 MP per frame on a phone
+    // (what the screen would "allow") halves the frame rate; the GPU compositor upscales the canvas for free.
+    var iw = poster.naturalWidth || 1536, ih = poster.naturalHeight || 864;
+    var cover = Math.max(pin.clientWidth / iw, pin.clientHeight / ih);          // screen px per frame px
+    var k = Math.min(window.devicePixelRatio || 1, 2, 1 / cover);               // canvas px per screen px
+    var w = Math.round(pin.clientWidth * k), h = Math.round(pin.clientHeight * k);
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; lastKey = ""; }
     update(true);
   }
 
   /* ----- decoded-frame window ----- */
+  var armed = false;                            // decoded frames are only prepared once the visitor interacts
   function want(i) {
-    if (!useBitmaps || i < 0 || i >= N || bmps[i] || pending[i] || !imgs[i]) return;
+    if (!armed || !useBitmaps || i < 0 || i >= N || bmps[i] || pending[i] || !imgs[i]) return;
     pending[i] = true;
     createImageBitmap(imgs[i]).then(function (b) {
       pending[i] = false;
@@ -75,6 +78,7 @@
     if (center === lastCenter) return;
     var dir = target >= p ? 1 : -1;
     lastCenter = center;
+    pump();
     for (var k = -3; k <= WINDOW; k++) want(center + k * dir);
     for (var i = 0; i < N; i++) if (bmps[i] && Math.abs(i - center) > WINDOW + 4) { bmps[i].close(); bmps[i] = null; }
   }
@@ -94,7 +98,7 @@
     var dx = clamp(FOCUS.tx * cw - FOCUS.fx * dw, cw - dw, 0);
     var dy = clamp(FOCUS.ty * ch - FOCUS.fy * dh, ch - dh, 0);
     ctx.globalAlpha = alpha;
-    ctx.imageSmoothingQuality = "high";
+    ctx.imageSmoothingQuality = "low";
     ctx.drawImage(img, dx, dy, dw, dh);
   }
   function draw() {
@@ -112,8 +116,9 @@
   var drawn = { A: null, B: null };
 
   /* ----- scroll -> target -> eased progress ----- */
+  var shownP = -1;
   function render() {
-    pin.style.setProperty("--p", p.toFixed(4));
+    if (Math.abs(p - shownP) > 0.0006 || p === target) { shownP = p; pin.style.setProperty("--p", p.toFixed(4)); }
     pin.classList.toggle("is-live", target > 0.45);
     warm(Math.round(p * (N - 1)));
     draw();
@@ -148,43 +153,53 @@
     if (Math.abs(i - p * (N - 1)) < 3) { lastKey = ""; draw(); }
   }
 
-  function startLoading() {
-    if (!/\.avif/.test(poster.currentSrc || "")) return;   // old browser without AVIF: keep the static poster
-    var order = [], seen = {};
-    [16, 8, 4, 2, 1].forEach(function (step) {            // coarse first, then fill the gaps
-      for (var i = step; i < N; i += step) if (!seen[i]) { seen[i] = 1; order.push(i); }
-    });
-    order.push(N - 1);
-    var next = 0, active = 0, MAX = 4;
-    (function pump() {
-      while (active < MAX && next < order.length) {
-        (function (idx) {
-          var img = new Image();
-          img.decoding = "async";
-          active++;
-          img.onload = img.onerror = function () { if (img.naturalWidth) setFrame(idx, img); active--; pump(); };
-          img.src = PREFIX + pad(idx + 1) + ".avif";
-        })(order[next++]);
-      }
-    })();
+  var requested = {}, active = 0, loadLimit = 0, MAX = 6, loadedCount = 0;
+  function pickNext() {                                        // missing frame closest to where the visitor is (ahead first)
+    var c = Math.round(Math.max(0, p) * (N - 1)), dir = target >= p ? 1 : -1;
+    for (var k = 0; k < N; k++) {
+      var a = c + k * dir, b = c - k * dir;
+      if (a >= 0 && a < N && !requested[a]) return a;
+      if (b >= 0 && b < N && !requested[b]) return b;
+    }
+    return -1;
   }
+  function pump() {
+    if (!loadLimit || !/\.avif/.test(poster.currentSrc || "")) return;   // old browser without AVIF: keep the static poster
+    while (active < MAX && loadedCount + active < loadLimit) {
+      var idx = pickNext();
+      if (idx < 0) return;
+      requested[idx] = true;
+      (function (i) {
+        var img = new Image();
+        img.decoding = "async";
+        active++;
+        img.onload = img.onerror = function () { active--; if (img.naturalWidth) { loadedCount++; setFrame(i, img); } pump(); };
+        img.src = PREFIX + pad(i + 1) + ".avif";
+      })(idx);
+    }
+  }
+  function startLoading(limit) { loadLimit = Math.max(loadLimit, limit); pump(); }
 
   function begin() {
+    requested[0] = true;
     if (poster.complete && poster.naturalWidth) imgs[0] = poster;
     else poster.addEventListener("load", function () { imgs[0] = poster; lastKey = ""; draw(); }, { once: true });
     measure();
 
-    // The other frames are only needed once somebody starts to scroll, so they are fetched on the first
-    // sign of interaction (or after 8 s as a fallback). This keeps the initial load and the audits light.
+    // Head start: a few frames right after load (small), everything else on the first sign of interaction,
+    // so the first seconds of scrolling already have neighbouring frames and the audits stay light.
+    var idle = function () { startLoading(14); };
+    setTimeout(function () { if ("requestIdleCallback" in window) requestIdleCallback(idle, { timeout: 2000 }); else idle(); }, 3500);
     var started = false;
     function go() {
       if (started) return;
       started = true;
+      armed = true; lastCenter = -99; warm(Math.round(Math.max(0, p) * (N - 1)));
       ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "scroll"].forEach(function (ev) { window.removeEventListener(ev, go); });
-      startLoading();
+      startLoading(N);
     }
     ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "scroll"].forEach(function (ev) { window.addEventListener(ev, go, { passive: true }); });
-    setTimeout(function () { if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 2000 }); else go(); }, 8000);
+    setTimeout(go, 8000);
   }
 
   if (document.readyState === "complete") begin();
