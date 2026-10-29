@@ -311,14 +311,15 @@ button { cursor: pointer; }
 .hero__vignette {
   position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(0deg, rgba(8,26,31,.92) 0%, rgba(8,26,31,.5) 42%, transparent 72%),
-    radial-gradient(130% 95% at 50% 38%, transparent 38%, rgba(5,18,22,.78) 100%);
-  opacity: clamp(.28, calc(.28 + var(--p) * 1.2), 1);
+    linear-gradient(rgba(8,26,31,.3), rgba(8,26,31,.3)),
+    linear-gradient(0deg, rgba(8,26,31,.94) 0%, rgba(8,26,31,.55) 45%, transparent 75%),
+    radial-gradient(130% 95% at 50% 38%, transparent 38%, rgba(5,18,22,.8) 100%);
+  opacity: clamp(.22, calc(.22 + var(--p) * 2.6), 1);
 }
 .hero__content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--sp-4); padding-top: calc(var(--header-h) + var(--sp-5)); padding-bottom: clamp(3.5rem, 11svh, 7rem); }
 .hero__content .eyebrow { color: var(--c-foam); margin-bottom: 0; }
 .hero__content .eyebrow::before { background: var(--c-ember); }
-.hero h1 { color: #fff; font-size: clamp(2.7rem, 8vw + .3rem, 6.1rem); line-height: 1; letter-spacing: -.02em; text-shadow: 0 2px 30px rgba(5,18,22,.45); }
+.hero h1 { color: #fff; font-size: clamp(2.7rem, 8vw + .3rem, 6.1rem); line-height: 1; letter-spacing: -.02em; text-shadow: 0 2px 28px rgba(5,18,22,.6), 0 1px 2px rgba(5,18,22,.5); }
 .hero h1 em { font-style: italic; color: var(--c-foam); padding-right: .06em; }
 .hero h1 mark { background: linear-gradient(95deg, #FF9A8E 0%, #FF4F43 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; padding-right: .06em; }
 .hero .lead { max-width: 36rem; color: rgba(226,226,224,.92); text-shadow: 0 1px 18px rgba(5,18,22,.6); }
@@ -355,8 +356,9 @@ html:not(.js) .hero__canvas, .hero--static .hero__canvas { display: none; }
 @media (min-width: 768px) {
   .hero__content { justify-content: center; padding-bottom: 0; padding-top: var(--header-h); }
   .hero__vignette { background:
-    linear-gradient(90deg, rgba(8,26,31,.88) 0%, rgba(8,26,31,.6) 36%, transparent 68%),
-    radial-gradient(130% 95% at 60% 40%, transparent 40%, rgba(5,18,22,.72) 100%); }
+    linear-gradient(rgba(8,26,31,.3), rgba(8,26,31,.3)),
+    linear-gradient(90deg, rgba(8,26,31,.92) 0%, rgba(8,26,31,.66) 40%, transparent 72%),
+    radial-gradient(130% 95% at 60% 40%, transparent 40%, rgba(5,18,22,.75) 100%); }
 }
 
 /* Tour cards */

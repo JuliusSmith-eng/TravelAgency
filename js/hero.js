@@ -26,12 +26,12 @@
     return;
   }
 
-  var N = 48;                                   // number of frames (must match assets/hero)
+  var N = 52;                                   // number of frames (must match assets/hero)
   var mobile = window.matchMedia("(max-width: 700px)").matches;
   var PREFIX = "assets/hero/" + (mobile ? "m" : "d") + "-";
   // Frames are AVIF (sharp at a small size). Browsers without AVIF keep the WebP poster and a static hero.
   // Where the waterfall should sit on screen (0..1) and zoom: shifted right on desktop to leave room for the text
-  var FOCUS = { fx: 0.49, fy: 0.45, tx: mobile ? 0.5 : 0.62, ty: 0.5, zoom: mobile ? 1 : 1.1 };
+  var FOCUS = { fx: 0.5, fy: 0.5, tx: 0.5, ty: 0.5, zoom: 1 };   // frames are already composed for each screen shape
 
   var ctx = canvas.getContext("2d", { alpha: false });
   var frames = new Array(N);                    // loaded Image objects (frames[0] is the poster)
@@ -49,7 +49,7 @@
     range = Math.max(1, hero.offsetHeight - vh);
     // canvas = real device pixels (sharp), capped so it never costs more than the frames can give
     var k = Math.min(window.devicePixelRatio || 1, 2);
-    var w = pin.clientWidth * k, h = pin.clientHeight * k, f = Math.min(1, 1600 / w, 1100 / h);
+    var w = pin.clientWidth * k, h = pin.clientHeight * k, f = Math.min(1, 1600 / w, 1800 / h);
     w = Math.round(w * f); h = Math.round(h * f);
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; lastDraw = ""; }
     update(true);
